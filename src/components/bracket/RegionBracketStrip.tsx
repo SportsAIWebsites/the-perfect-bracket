@@ -1,7 +1,6 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { BracketRegion, RoundName } from "@/types/bracket";
 import { MatchupCard } from "./MatchupCard";
-import { ROUND_NAMES } from "@/lib/constants";
 
 interface RegionBracketStripProps {
   region: BracketRegion;
