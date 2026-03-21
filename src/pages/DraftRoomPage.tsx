@@ -1,6 +1,6 @@
 import { useState, useMemo, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { mockPlayers, mockGames } from '../mock'
+import { mockPlayers } from '../mock'
 import type { Player } from '../types/player'
 import type { PositionSlot } from '../types/fantasy'
 import { PlayerCard } from '../components/player/PlayerCard'
@@ -8,19 +8,10 @@ import { PlayerModal } from '../components/player/PlayerModal'
 import { ROUND_CONFIGS, canFillSlot } from '../types/fantasy'
 import { useFantasyStore } from '../store/useFantasyStore'
 import { scoringEngine } from '../scoring/engine'
-import { CountdownTimer } from '../components/ui/CountdownTimer'
+
 import { useEliminatedTeams } from '../hooks/useEliminatedTeams'
 import { isPlayerEligible } from '../utils/tournamentEligibility'
-
-function getRoundLockTime(): Date {
-  const scheduled = mockGames
-    .filter(g => g.status === 'scheduled')
-    .map(g => new Date(g.scheduledAt))
-    .sort((a, b) => a.getTime() - b.getTime())
-  return scheduled[0] ?? new Date(0)
-}
-
-const ROUND_LOCK_TIME = getRoundLockTime()
+import { useLiveScores } from '../hooks/useLiveScores'
 
 const SLOT_LABELS: Record<string, string> = {
   G1: 'Guard', G2: 'Guard', G3: 'Guard',
@@ -43,7 +34,9 @@ export function DraftRoomPage() {
   const { currentRound, draftedPlayers, draft, drop, getSlots, isDrafted, rosterLocked, lockRoster } = useFantasyStore()
   const config = ROUND_CONFIGS.find(r => r.roundNumber === currentRound) ?? ROUND_CONFIGS[0]
   const slots = getSlots()
-  const locked = Date.now() >= ROUND_LOCK_TIME.getTime()
+  const { games: liveGames } = useLiveScores()
+  const gamesStarted = liveGames.some(g => g.status === 'in_progress' || g.status === 'final')
+  const locked = rosterLocked || gamesStarted
   const rosterComplete = draftedPlayers.length === config.slotCount
 
   const eliminatedTeamIds = useEliminatedTeams()
@@ -117,7 +110,11 @@ export function DraftRoomPage() {
         <div className="w-px h-5 bg-[#2C2C2C]" />
         <div className="font-bold text-white text-sm">{config.label} Draft Room</div>
         <div className="flex-1" />
-        <CountdownTimer lockAt={ROUND_LOCK_TIME} label="Locks in" />
+        {locked ? (
+          <span className="text-xs font-bold text-red-400 bg-red-400/10 px-3 py-1 rounded-full">🔒 Draft Locked</span>
+        ) : (
+          <span className="text-xs font-bold text-green-400 bg-green-400/10 px-3 py-1 rounded-full">● Draft Open</span>
+        )}
       </div>
 
       {/* ── SCROLLABLE BODY ── */}

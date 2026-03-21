@@ -1,6 +1,6 @@
 import { useState, useMemo, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { mockPlayers, mockGames } from '../mock'
+import { mockPlayers } from '../mock'
 import type { Player } from '../types/player'
 import type { PositionSlot } from '../types/fantasy'
 import { PlayerCard } from '../components/player/PlayerCard'
@@ -10,16 +10,7 @@ import { useFantasyStore } from '../store/useFantasyStore'
 import { scoringEngine } from '../scoring/engine'
 import { useEliminatedTeams } from '../hooks/useEliminatedTeams'
 import { isPlayerEligible } from '../utils/tournamentEligibility'
-
-function getRoundLockTime(): Date {
-  const scheduled = mockGames
-    .filter(g => g.status === 'scheduled')
-    .map(g => new Date(g.scheduledAt))
-    .sort((a, b) => a.getTime() - b.getTime())
-  return scheduled[0] ?? new Date(0)
-}
-
-const ROUND_LOCK_TIME = getRoundLockTime()
+import { useLiveScores } from '../hooks/useLiveScores'
 
 const SLOT_LABELS: Record<string, string> = {
   G1: 'Guard', G2: 'Guard', G3: 'Guard',
@@ -42,8 +33,11 @@ export function DraftPage() {
   const { currentRound, draftedPlayers, draft, drop, getSlots, isDrafted, rosterLocked } = useFantasyStore()
   const config = ROUND_CONFIGS.find(r => r.roundNumber === currentRound) ?? ROUND_CONFIGS[0]
   const slots = getSlots()
+  const { games: liveGames } = useLiveScores()
 
-  const locked = rosterLocked || Date.now() >= ROUND_LOCK_TIME.getTime()
+  // Lock draft when any current round game is in progress or final
+  const gamesStarted = liveGames.some(g => g.status === 'in_progress' || g.status === 'final')
+  const locked = rosterLocked || gamesStarted
   const rosterComplete = draftedPlayers.length === config.slotCount
   const eliminatedTeamIds = useEliminatedTeams()
 

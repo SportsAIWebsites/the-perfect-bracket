@@ -177,13 +177,18 @@ export const useFantasyStore = create<FantasyStore>()(
       migrate: (persistedState: unknown, version: number) => {
         const state = persistedState as Record<string, unknown>
         if (version < 2) {
-          // Reset to Round 2 with Round 1 locked at 0 pts
-          state.currentRound = 2
-          state.draftedPlayers = []
-          state.roundHistory = [
-            { roundId: 1, roundLabel: 'First Round', lockedAt: '2026-03-20T23:59:00.000Z', players: [], totalPoints: 0 },
-          ]
-          state.rosterLocked = false
+          // Set defaults only for missing fields — preserve existing data
+          state.currentRound = state.currentRound ?? 2
+          // Preserve drafted players if they exist
+          if (!Array.isArray(state.draftedPlayers)) {
+            state.draftedPlayers = []
+          }
+          if (!Array.isArray(state.roundHistory)) {
+            state.roundHistory = [
+              { roundId: 1, roundLabel: 'First Round', lockedAt: '2026-03-20T23:59:00.000Z', players: [], totalPoints: 0 },
+            ]
+          }
+          state.rosterLocked = state.rosterLocked ?? false
         }
         return state as unknown as FantasyStore
       },

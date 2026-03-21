@@ -11,7 +11,7 @@ const prizeStructure = [
   { rank: 'Cinderella Pick', prize: '$10', icon: '🔥', color: 'text-[#ff6b35]' },
 ]
 
-// Realistic mock opponents — per-round scores for 5 players average ~25–35 pts each
+// Simulated competitors for demo purposes
 const MOCK_OPPONENTS = [
   { name: 'BracketBuster99', r1: 198.5, delta: '+1' },
   { name: 'CinderellaFC',    r1: 187.0, delta: '+3' },
@@ -29,7 +29,6 @@ export function LeaderboardPage() {
   const { draftedPlayers, currentRound, cumulativePoints } = useFantasyStore()
   const { scores, loading } = useLiveFantasyScoring(draftedPlayers, currentRound)
 
-  // Only count actual/live stats — same logic as My Team page
   const actualCurrentTotal = useMemo(() =>
     Array.from(scores.values()).filter(s => s.isActual).reduce((sum, s) => sum + s.fantasyPoints, 0),
   [scores])
@@ -48,8 +47,6 @@ export function LeaderboardPage() {
   }, [yourTotal])
 
   const youRow = rows.find(r => r.isYou)!
-  const top8   = rows.filter(r => !r.isYou).slice(0, 8)
-  const showEllipsis = youRow.rank > 9
 
   return (
     <div className="space-y-6">
@@ -70,25 +67,42 @@ export function LeaderboardPage() {
         </div>
       </GlowCard>
 
-      {/* Leaderboard table */}
+      {/* Your Ranking — always at top */}
+      <GlowCard>
+        <div className="text-xs text-slate-500 uppercase tracking-wider mb-3">Your Ranking</div>
+        <div className="bg-[#FFD10008] border border-[#FFD10030] rounded-xl p-4 flex items-center gap-4">
+          <div className="text-3xl font-black text-[#FFD100] tabular-nums">#{youRow.rank}</div>
+          <div className="flex-1">
+            <div className="text-sm font-semibold text-[#FFD100]">You</div>
+            <div className="text-xs text-slate-500">of {rows.length} participants</div>
+          </div>
+          <div className="text-right">
+            <div className="text-xl font-bold text-[#FFD100] tabular-nums">{youRow.score.toFixed(1)}</div>
+            <div className="text-[10px] text-slate-500">total points</div>
+          </div>
+        </div>
+      </GlowCard>
+
+      {/* Full Standings */}
       <GlowCard>
         <div className="flex items-center justify-between mb-4">
           <div>
-            <div className="text-sm font-semibold text-white">Global Leaderboard</div>
-            <div className="text-xs text-slate-500">18,432 total participants · First Round</div>
+            <div className="text-sm font-semibold text-white">Full Standings</div>
+            <div className="text-xs text-slate-500">{rows.length} participants · Second Round</div>
           </div>
         </div>
 
         <div className="space-y-1">
-          {top8.map(entry => (
-            <LeaderRow key={entry.name} rank={entry.rank} name={entry.name} score={entry.score} delta={entry.delta} isYou={false} />
+          {rows.map(entry => (
+            <LeaderRow
+              key={entry.name}
+              rank={entry.rank}
+              name={entry.isYou ? 'You' : entry.name}
+              score={entry.score}
+              delta={entry.isYou ? '—' : entry.delta}
+              isYou={entry.isYou}
+            />
           ))}
-
-          {showEllipsis && (
-            <div className="text-[10px] text-slate-600 text-center py-1">· · · · ·</div>
-          )}
-
-          <LeaderRow rank={youRow.rank} name="You" score={youRow.score} delta="—" isYou />
         </div>
       </GlowCard>
     </div>
