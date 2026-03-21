@@ -4,7 +4,7 @@ import { RegionBracketStrip } from "./RegionBracketStrip";
 import { FinalFourCenter } from "./FinalFourCenter";
 import { TournamentLeaderboard } from "./TournamentLeaderboard";
 
-const BRACKET_WIDTH = 2400;
+const BRACKET_WIDTH = 1800;
 
 interface FullBracketViewProps {
   bracket: FullBracket;
@@ -57,9 +57,9 @@ export function FullBracketView({
         >
           <div className="px-4">
             {/* Single unified bracket: Left regions | Final Four | Right regions */}
-            <div className="flex items-center justify-center gap-4">
+            <div className="flex items-center justify-center gap-2">
               {/* Left side: East (top) + South (bottom) */}
-              <div className="flex flex-col gap-8">
+              <div className="flex flex-col gap-6">
                 <RegionBracketStrip
                   region={bracket.regions.East}
                   isDemo={isDemo}
@@ -79,7 +79,7 @@ export function FullBracketView({
               </div>
 
               {/* Right side: West (top) + Midwest (bottom) */}
-              <div className="flex flex-col gap-8">
+              <div className="flex flex-col gap-6">
                 <RegionBracketStrip
                   region={bracket.regions.West}
                   reverse

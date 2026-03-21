@@ -107,7 +107,7 @@ export function MatchupCard({ matchup, onClick, isExpanded, isDemo, onClose }: M
       <div
         onClick={onClick}
         className={clsx(
-          "w-[160px] rounded-lg border bg-card overflow-hidden cursor-pointer transition-all hover:scale-[1.02]",
+          "w-[130px] rounded-lg border bg-card overflow-hidden cursor-pointer transition-all hover:scale-[1.02]",
           isLive && "border-live-red/40 shadow-[0_0_8px_rgba(239,68,68,0.15)]",
           hasPrediction && "border-accent/30 glow-accent",
           isFinal && "border-border-subtle",

@@ -174,6 +174,19 @@ export const useFantasyStore = create<FantasyStore>()(
     {
       name: 'snapback-fantasy-store',
       version: 2,
+      migrate: (persistedState: unknown, version: number) => {
+        const state = persistedState as Record<string, unknown>
+        if (version < 2) {
+          // Reset to Round 2 with Round 1 locked at 0 pts
+          state.currentRound = 2
+          state.draftedPlayers = []
+          state.roundHistory = [
+            { roundId: 1, roundLabel: 'First Round', lockedAt: '2026-03-20T23:59:00.000Z', players: [], totalPoints: 0 },
+          ]
+          state.rosterLocked = false
+        }
+        return state as FantasyStore
+      },
       // Only persist the data we need — not derived functions
       partialize: (state) => ({
         currentRound: state.currentRound,

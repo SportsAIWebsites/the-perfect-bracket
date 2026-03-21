@@ -9,8 +9,8 @@ interface RegionBracketStripProps {
 }
 
 const ROUNDS: RoundName[] = ["R64", "R32", "S16", "E8"];
-const BRACKET_HEIGHT = 700;
-const CONNECTOR_W = 28;
+const BRACKET_HEIGHT = 650;
+const CONNECTOR_W = 18;
 
 /**
  * Draws bracket connector lines between two feeder games and one output game.
@@ -92,7 +92,7 @@ export function RegionBracketStrip({
           elements.push(
             <div
               key={round}
-              className="flex h-full w-[160px] flex-col justify-around"
+              className="flex h-full w-[130px] flex-col justify-around"
             >
               {matchups.map((matchup) => (
                 <MatchupCard
