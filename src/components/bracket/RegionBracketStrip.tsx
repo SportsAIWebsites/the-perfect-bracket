@@ -82,22 +82,6 @@ export function RegionBracketStrip({
         {region.name}
       </h3>
 
-      {/* Round headers */}
-      <div className="flex mb-1">
-        {roundsOrder.map((round, i) => (
-          <Fragment key={round}>
-            <div className="w-[160px] text-center">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-text-dim">
-                {ROUND_NAMES[round]}
-              </span>
-            </div>
-            {i < roundsOrder.length - 1 && (
-              <div style={{ width: CONNECTOR_W }} />
-            )}
-          </Fragment>
-        ))}
-      </div>
-
       {/* Bracket body — fixed height, each column uses justify-around */}
       <div className="flex" style={{ height: BRACKET_HEIGHT }}>
         {roundsOrder.flatMap((round, roundIdx) => {

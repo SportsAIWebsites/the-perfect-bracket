@@ -39,11 +39,11 @@ export function DraftPage() {
   const [previewPlayer, setPreviewPlayer] = useState<Player | null>(null)
   const pickerRef = useRef<HTMLDivElement>(null)
 
-  const { currentRound, draftedPlayers, draft, drop, getSlots, isDrafted } = useFantasyStore()
+  const { currentRound, draftedPlayers, draft, drop, getSlots, isDrafted, rosterLocked } = useFantasyStore()
   const config = ROUND_CONFIGS.find(r => r.roundNumber === currentRound) ?? ROUND_CONFIGS[0]
   const slots = getSlots()
 
-  const locked = Date.now() >= ROUND_LOCK_TIME.getTime()
+  const locked = rosterLocked || Date.now() >= ROUND_LOCK_TIME.getTime()
   const rosterComplete = draftedPlayers.length === config.slotCount
   const eliminatedTeamIds = useEliminatedTeams()
 

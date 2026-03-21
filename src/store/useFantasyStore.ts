@@ -42,10 +42,18 @@ interface FantasyStore {
 export const useFantasyStore = create<FantasyStore>()(
   persist(
     (set, get) => ({
-      currentRound: 1,
+      currentRound: 2,
       draftedPlayers: [],
       totalScore: 0,
-      roundHistory: [],
+      roundHistory: [
+        {
+          roundId: 1,
+          roundLabel: 'First Round',
+          lockedAt: '2026-03-20T23:59:00.000Z',
+          players: [],
+          totalPoints: 0,
+        },
+      ],
       rosterLocked: false,
 
       draft(player) {
@@ -123,7 +131,15 @@ export const useFantasyStore = create<FantasyStore>()(
       },
 
       resetSeason() {
-        set({ currentRound: 1, draftedPlayers: [], roundHistory: [], totalScore: 0, rosterLocked: false })
+        set({
+          currentRound: 2,
+          draftedPlayers: [],
+          roundHistory: [
+            { roundId: 1, roundLabel: 'First Round', lockedAt: '2026-03-20T23:59:00.000Z', players: [], totalPoints: 0 },
+          ],
+          totalScore: 0,
+          rosterLocked: false,
+        })
       },
 
       getSlots() {
@@ -157,6 +173,7 @@ export const useFantasyStore = create<FantasyStore>()(
     }),
     {
       name: 'snapback-fantasy-store',
+      version: 2,
       // Only persist the data we need — not derived functions
       partialize: (state) => ({
         currentRound: state.currentRound,

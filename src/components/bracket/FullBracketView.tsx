@@ -4,7 +4,7 @@ import { RegionBracketStrip } from "./RegionBracketStrip";
 import { FinalFourCenter } from "./FinalFourCenter";
 import { TournamentLeaderboard } from "./TournamentLeaderboard";
 
-const BRACKET_WIDTH = 2100;
+const BRACKET_WIDTH = 2400;
 
 interface FullBracketViewProps {
   bracket: FullBracket;
@@ -56,37 +56,41 @@ export function FullBracketView({
           ref={bracketRef}
         >
           <div className="px-4">
-            {/* Top half: East (left) → Final Four ← West (right) */}
-            <div className="flex items-start justify-center gap-6">
-              <RegionBracketStrip
-                region={bracket.regions.East}
-                isDemo={isDemo}
-              />
-              <div className="flex flex-col items-center pt-[100px]">
+            {/* Single unified bracket: Left regions | Final Four | Right regions */}
+            <div className="flex items-center justify-center gap-4">
+              {/* Left side: East (top) + South (bottom) */}
+              <div className="flex flex-col gap-8">
+                <RegionBracketStrip
+                  region={bracket.regions.East}
+                  isDemo={isDemo}
+                />
+                <RegionBracketStrip
+                  region={bracket.regions.South}
+                  isDemo={isDemo}
+                />
+              </div>
+
+              {/* Center: Final Four — vertically centered between left/right stacks */}
+              <div className="flex flex-col items-center justify-center">
                 <FinalFourCenter
                   finalFour={bracket.finalFour}
                   isDemo={isDemo}
                 />
               </div>
-              <RegionBracketStrip
-                region={bracket.regions.West}
-                reverse
-                isDemo={isDemo}
-              />
-            </div>
 
-            {/* Bottom half: South (left) ← → Midwest (right) */}
-            <div className="mt-8 flex items-start justify-center gap-6">
-              <RegionBracketStrip
-                region={bracket.regions.South}
-                isDemo={isDemo}
-              />
-              <div className="w-[160px]" /> {/* spacer for center alignment */}
-              <RegionBracketStrip
-                region={bracket.regions.Midwest}
-                reverse
-                isDemo={isDemo}
-              />
+              {/* Right side: West (top) + Midwest (bottom) */}
+              <div className="flex flex-col gap-8">
+                <RegionBracketStrip
+                  region={bracket.regions.West}
+                  reverse
+                  isDemo={isDemo}
+                />
+                <RegionBracketStrip
+                  region={bracket.regions.Midwest}
+                  reverse
+                  isDemo={isDemo}
+                />
+              </div>
             </div>
           </div>
         </div>
