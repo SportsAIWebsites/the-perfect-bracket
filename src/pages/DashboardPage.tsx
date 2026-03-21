@@ -94,7 +94,7 @@ function MockGameCard({ game }: { game: typeof mockGames[0] }) {
 }
 
 export function DashboardPage() {
-  const { draftedPlayers, currentRound } = useFantasyStore()
+  const { currentRound } = useFantasyStore()
   const config = ROUND_CONFIGS.find(r => r.roundNumber === currentRound) ?? ROUND_CONFIGS[0]
 
   const { games: liveGames, loading: scoresLoading, lastUpdated } = useLiveScores()
