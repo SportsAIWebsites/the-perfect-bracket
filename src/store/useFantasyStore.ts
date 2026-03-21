@@ -185,7 +185,7 @@ export const useFantasyStore = create<FantasyStore>()(
           ]
           state.rosterLocked = false
         }
-        return state as FantasyStore
+        return state as unknown as FantasyStore
       },
       // Only persist the data we need — not derived functions
       partialize: (state) => ({
