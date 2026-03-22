@@ -87,6 +87,27 @@ const logs: PlayerGameLog[] = [
   // ── g20: Vanderbilt 78, McNeese 68 ───────────────────────────────
   { playerId: 'tyrin-lawrence',     gameId: 'g20', teamId: 'vanderbilt', points: 21, rebounds:  4, assists: 4, steals: 1, blocks: 0, turnovers: 2, fouls: 3, minutesPlayed: 36 },
   { playerId: 'aj-hoggard',         gameId: 'g20', teamId: 'vanderbilt', points: 16, rebounds:  3, assists: 7, steals: 1, blocks: 0, turnovers: 2, fouls: 2, minutesPlayed: 34 },
+
+  // ── ROUND 2 RESULTS (March 21–22, 2026) ─────────────────────────────
+
+  // ── r2-g1: Duke 81, TCU 58 ──────────────────────────────────────────
+  { playerId: 'cameron-boozer',    gameId: 'r2-g1', teamId: 'duke',  points: 22, rebounds: 13, assists: 3, steals: 0, blocks: 1, turnovers: 5, fouls: 1, minutesPlayed: 39 },
+  { playerId: 'cayden-boozer',     gameId: 'r2-g1', teamId: 'duke',  points: 19, rebounds:  2, assists: 5, steals: 2, blocks: 0, turnovers: 0, fouls: 1, minutesPlayed: 39 },
+  { playerId: 'maliq-brown',      gameId: 'r2-g1', teamId: 'duke',  points: 14, rebounds:  7, assists: 2, steals: 1, blocks: 2, turnovers: 1, fouls: 2, minutesPlayed: 34 },
+  { playerId: 'kon-knueppel',     gameId: 'r2-g1', teamId: 'duke',  points: 13, rebounds:  3, assists: 4, steals: 0, blocks: 0, turnovers: 1, fouls: 2, minutesPlayed: 32 },
+
+  // ── r2-g2: Arkansas 94, High Point 88 ───────────────────────────────
+  { playerId: 'darius-acuff',     gameId: 'r2-g2', teamId: 'arkansas', points: 36, rebounds: 1, assists: 6, steals: 1, blocks: 0, turnovers: 2, fouls: 2, minutesPlayed: 34 },
+  { playerId: 'meleek-thomas',    gameId: 'r2-g2', teamId: 'arkansas', points: 19, rebounds: 4, assists: 3, steals: 1, blocks: 0, turnovers: 2, fouls: 3, minutesPlayed: 36 },
+  { playerId: 'malique-ewin',     gameId: 'r2-g2', teamId: 'arkansas', points: 14, rebounds: 12, assists: 1, steals: 0, blocks: 1, turnovers: 1, fouls: 4, minutesPlayed: 32 },
+  { playerId: 'trevion-boyd',     gameId: 'r2-g2', teamId: 'high-point', points: 30, rebounds: 5, assists: 4, steals: 1, blocks: 0, turnovers: 3, fouls: 3, minutesPlayed: 40 },
+
+  // ── r2-g3: Michigan St 77, Louisville 69 ────────────────────────────
+  { playerId: 'jeremy-fears',     gameId: 'r2-g3', teamId: 'michigan-st', points: 12, rebounds: 3, assists: 16, steals: 1, blocks: 0, turnovers: 2, fouls: 1, minutesPlayed: 38 },
+  { playerId: 'coen-carr',        gameId: 'r2-g3', teamId: 'michigan-st', points: 21, rebounds: 10, assists: 2, steals: 1, blocks: 2, turnovers: 2, fouls: 3, minutesPlayed: 36 },
+  { playerId: 'jaxon-kohler',     gameId: 'r2-g3', teamId: 'michigan-st', points: 14, rebounds: 6, assists: 1, steals: 0, blocks: 1, turnovers: 1, fouls: 4, minutesPlayed: 28 },
+  { playerId: 'mikel-brown',      gameId: 'r2-g3', teamId: 'louisville',  points: 20, rebounds: 3, assists: 5, steals: 1, blocks: 0, turnovers: 3, fouls: 3, minutesPlayed: 38 },
+  { playerId: 'chucky-hepburn',   gameId: 'r2-g3', teamId: 'louisville',  points: 16, rebounds: 2, assists: 6, steals: 0, blocks: 0, turnovers: 4, fouls: 2, minutesPlayed: 36 },
 ]
 
 /** Look up a player's box score for a specific game. */
