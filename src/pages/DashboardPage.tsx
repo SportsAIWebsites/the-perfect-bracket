@@ -151,9 +151,9 @@ export function DashboardPage() {
         </div>
       </div>
 
-      {/* Side-by-side: Scores left, News right */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* LEFT — Today's Results */}
+      {/* Side-by-side: Scores left (1/3), News right (2/3) */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* LEFT — Today's Results (1 col) */}
         <GlowCard>
           <div className="text-xs text-slate-500 uppercase tracking-wider mb-3">Today's Results</div>
           {!scoresLoading && liveGames.length > 0 ? (
@@ -203,8 +203,8 @@ export function DashboardPage() {
           )}
         </GlowCard>
 
-        {/* RIGHT — Live News */}
-        <GlowCard>
+        {/* RIGHT — Live News (2 cols) */}
+        <GlowCard className="lg:col-span-2">
           <div className="text-xs text-slate-500 uppercase tracking-wider mb-3 flex items-center gap-2">
             Latest News
             {!newsLoading && news.length > 0 && <span className="text-green-400 text-[10px]">● Live</span>}
