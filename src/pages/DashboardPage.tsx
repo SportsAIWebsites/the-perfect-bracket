@@ -151,6 +151,61 @@ export function DashboardPage() {
         </div>
       </div>
 
+      {/* Today's Results — compact column */}
+      {!scoresLoading && liveGames.length > 0 && (
+        <GlowCard>
+          <div className="text-xs text-slate-500 uppercase tracking-wider mb-3">Today's Results</div>
+          <div className="space-y-1">
+            {[
+              ...liveGames.filter(g => g.status === 'in_progress'),
+              ...liveGames.filter(g => g.status === 'final'),
+              ...liveGames.filter(g => g.status === 'scheduled'),
+            ].map(game => {
+              const isLive = game.status === 'in_progress'
+              const isFinal = game.status === 'final'
+              const homeWin = isFinal && game.homeScore > game.awayScore
+              const awayWin = isFinal && game.awayScore > game.homeScore
+              const halfLabel = game.period === 1 ? '1st' : game.period === 2 ? '2nd' : 'OT'
+
+              return (
+                <div key={game.espnId} className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-[#161616] transition-colors">
+                  {/* Away team */}
+                  <span className={`w-14 text-xs font-semibold text-right truncate ${awayWin ? 'text-[#FFD100]' : isLive ? 'text-white' : 'text-slate-400'}`}>
+                    {game.awayAbbr}
+                  </span>
+                  <span className={`w-8 text-xs font-bold tabular-nums text-right ${awayWin ? 'text-[#FFD100]' : 'text-white'}`}>
+                    {game.status !== 'scheduled' ? game.awayScore : ''}
+                  </span>
+
+                  {/* Separator */}
+                  <span className="text-slate-600 text-xs">—</span>
+
+                  {/* Home team */}
+                  <span className={`w-8 text-xs font-bold tabular-nums ${homeWin ? 'text-[#FFD100]' : 'text-white'}`}>
+                    {game.status !== 'scheduled' ? game.homeScore : ''}
+                  </span>
+                  <span className={`w-14 text-xs font-semibold truncate ${homeWin ? 'text-[#FFD100]' : isLive ? 'text-white' : 'text-slate-400'}`}>
+                    {game.homeAbbr}
+                  </span>
+
+                  {/* Status */}
+                  <span className="ml-auto text-[10px] font-medium shrink-0">
+                    {isLive && (
+                      <span className="text-green-400 flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                        {game.clock} {halfLabel}
+                      </span>
+                    )}
+                    {isFinal && <span className="text-slate-500">FINAL</span>}
+                    {game.status === 'scheduled' && <span className="text-slate-600">TBD</span>}
+                  </span>
+                </div>
+              )
+            })}
+          </div>
+        </GlowCard>
+      )}
+
       <div className="grid grid-cols-1 gap-6">
         {/* Live News */}
         <GlowCard>

@@ -33,10 +33,9 @@ export function BracketPage() {
   return (
     <div className="py-4">
       <div className="mb-4 text-center">
-        <span className="text-[10px] text-text-dim">
-          Last updated:{" "}
-          {new Date(bracket.lastUpdated).toLocaleTimeString()}
-        </span>
+        <h1 className="text-2xl font-black text-white tracking-tight">
+          The Perfect Bracket
+        </h1>
       </div>
       <FullBracketView bracket={bracket} isDemo={isDemo} />
     </div>
